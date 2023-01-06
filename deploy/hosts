@@ -1,0 +1,5 @@
+[baseinstall]
+immanentizing.eschaton.quest
+
+[digitalocean]
+localhost ansible_connection=local

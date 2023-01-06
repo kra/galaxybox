@@ -1,0 +1,38 @@
+---
+# misc config of distro packages
+- name: Disable SELinux
+  ansible.posix.selinux:
+    state: disabled
+- name: write postfix config
+  copy:
+    src: "{{ src }}/etc/postfix/main.cf"
+    dest: /etc/postfix/main.cf
+- name: restart postfix
+  ansible.builtin.systemd:
+      name: postfix
+    state: restarted
+- name: set timezone with zoneinfo
+  file:
+    src: /usr/share/zoneinfo/US/Pacific
+    dest: /etc/localtime
+    state: link
+    force: yes
+- name: set timezone with clock config
+  copy:
+    src: "{{ src }}/etc/sysconfig/clock"
+    dest: /etc/sysconfig/clock
+    force: yes
+- name: start chronyd
+  ansible.builtin.systemd:
+    name: chronyd
+    state: started
+    enabled: yes    
+# This is eating memory.
+- name: stop and disable dnf makecache
+  ansible.builtin.systemd:
+    name: dnf-makecache.timer
+    state: stopped
+    enabled: no
+# Reboot to persist selinux changes.
+- name: reboot
+  ansible.builtin.reboot:

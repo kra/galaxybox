@@ -1,0 +1,9 @@
+Host *
+Port 42422
+IdentityFile conf/id_rsa
+User redarmorboy
+StrictHostKeyChecking no
+UserKnownHostsFile /dev/null
+#RequestTty no
+#RequestTty auto
+#RequestTty force

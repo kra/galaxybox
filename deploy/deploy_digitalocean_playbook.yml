@@ -1,0 +1,7 @@
+---
+- hosts: digitalocean
+  vars:
+    hostname: immanentizing.eschaton.quest
+  tasks:
+    - include: deploy_digitalocean.yml
+    - include: dns.yml

@@ -1,0 +1,18 @@
+---
+- name: add redarmorboy user
+  user:
+    name: redarmorboy
+    append: yes
+#    groups: wheel
+- name: set up authorized key for redarmorboy user
+  authorized_key:
+    user: redarmorboy
+    key: "{{ item }}"
+    exclusive: yes
+  with_file:
+    - "{{ src }}/id_rsa.pub"
+- name: allow nopasswd sudo for redarmorboy user
+  copy:
+    src: "{{ src }}/etc/sudoers.d/redarmorboy"
+    dest: /etc/sudoers.d/redarmorboy
+    mode: "u=r"
